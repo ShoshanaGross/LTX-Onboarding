@@ -1,0 +1,107 @@
+:root {
+  --semantic-bg-neutral-inverse: #e6e7e9;
+  --semantic-bg-secondary: #ffffff;
+  --semantic-bg-tertiary: #f3f4f6;
+  --semantic-fg-primary: #161719;
+  --semantic-bg-light-background-bg-alpha: rgba(0, 0, 0, 0.04);
+  --semantic-fg-secondary: #a3a6ac;
+  --semantic-accent-primary: #2b9bf0;
+
+  --font-family-primary: 'Brown LL';
+}
+
+// Mixins
+.body-small {
+  font-family: var(--font-family-primary);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.25px;
+}
+
+.body-medium {
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.25px;
+  @extend .button-press-no-border;
+}
+
+.body-large {
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
+
+.headline-xl {
+  font-family: var(--font-family-primary);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.75px;
+}
+
+.headline-md {
+  font-family: var(--font-family-primary);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+}
+
+.headline-sm {
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
+
+.label-lg {
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.5px;
+}
+
+.label-xl {
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+}
+
+.typography-body2 {
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 143%;
+  letter-spacing: 0.17px;
+}
+
+.button-press-no-border {
+  outline: none;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

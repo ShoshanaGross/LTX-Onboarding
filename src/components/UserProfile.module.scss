@@ -1,0 +1,217 @@
+@import '../styles/common.scss';
+
+.userProfile {
+  display: flex;
+  padding-top: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  align-self: center;
+  padding-bottom: 72px;
+
+  .backButton {
+    display: flex;
+    height: 24px;
+    align-items: center;
+    background: none;
+    cursor: pointer;
+    color: var(--semantic-fg-secondary, #7a7c81);
+
+    @extend .body-medium;
+  }
+}
+
+.userProfileMainContainer {
+  display: flex;
+  width: 100%;
+  max-width: 1020px;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 1 0 0;
+  border-radius: 32px;
+  background: var(--semantic-bg-secondary, #ffffff);
+  padding: 32px 40px;
+  gap: 24px;
+
+  .userProfileTabs,
+  .userProfileTabsContent,
+  .userProfileCard {
+    width: 100%;
+    max-width: 764px;
+    min-width: 764px;
+    align-self: center;
+  }
+
+  @media (max-width: 800px) {
+    .user-profile-tabs,
+    .user-profile-tabs-content,
+    .user-profile-card {
+      min-width: unset;
+    }
+  }
+
+.userProfileCard {
+  height: auto;
+  min-height: 152px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  align-items: flex-start;
+  gap: 24px;
+  align-self: stretch;
+
+  .userImageContainer {
+    .userImage {
+      position: relative;
+      top: 8px;
+      display: flex;
+      width: 136px;
+      height: 136px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      border: 0.824px solid var(--semantic-bg-white-secondary, rgba(255, 255, 255, 0.12));
+    }
+  }
+}
+
+.userInfoContainer {
+  display: flex;
+  width: 100%;
+  max-width: 604px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+
+  .infoGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1 0 0;
+
+    .userName {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      overflow: hidden;
+      color: var(--semantic-fg-primary, #161719);
+      text-overflow: ellipsis;
+
+      @extend .headline-xl;
+    }
+
+    .userAgeLocation {
+      color: var(--semantic-fg-primary, #161719);
+
+      @extend .body-small;
+    }
+  }
+
+  .userEmail {
+    color: var(--semantic-fg-primary, #161719);
+
+    @extend .body-large;
+  }
+}
+
+.editButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  .editButton {
+    display: flex;
+    width: 172px;
+    height: 40px;
+    padding: 8px 16px 8px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    border-radius: 999px;
+    background: var(--semantic-bg-neutral-secondary, rgba(44, 45, 48, 0.08));
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.userProfileTabs {
+  .userProfileTabsContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 1px solid var(--semantic-bg-neutral-inverse);
+
+    .userProfileTabsItemTitle {
+      display: flex;
+      min-width: 72px;
+      padding: 16px 0px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px 4px 0px 0px;
+      border: none;
+      background: none;
+
+      color: var(--semantic-fg-secondary, #7a7c81);
+
+      @extend .label-xl;
+
+      &.active {
+        color: var(--semantic-fg-primary, #161719);
+        border-bottom: 2px solid var(--semantic-bg-neutral, #2c2d30);
+
+        color: #2c2d30;
+      }
+
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+.userProfileTabsContent {
+  .userProfileTabsContentItem {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    .userProfileTabsContentItemTitle {
+      color: var(--semantic-fg-primary, #161719);
+
+      @extend .headline-sm;
+    }
+
+    .userProfileTabsContentItemText {
+      display: flex;
+      max-width: 724px;
+      padding-right: 56px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      color: var(--semantic-fg-primary, #161719);
+
+      @extend .body-large;
+    }
+  }
+}
+   
+.userProfileTabsPostItems,
+  .userProfileTabsPostItems {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding-top: 40px;
+  } 
+}

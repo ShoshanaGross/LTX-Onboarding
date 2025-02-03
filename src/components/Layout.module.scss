@@ -1,0 +1,46 @@
+$headerHeight: 64px;
+.layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--semantic-bg-primary, #fcfcfd);
+
+  .mainHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: $headerHeight;
+    padding: 12px 16px 12px 24px;
+    background-color: var(--semantic-bg-secondary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--semantic-bg-neutral-inverse);
+    flex-shrink: 0;
+
+    .lightricksIcon {
+      width: 100px;
+      height: 24px;
+    }
+
+    .currentUserImage {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+    }
+  }
+
+  .app {
+    flex: 1;
+    padding: 0 40px;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    margin-top: $headerHeight;
+    flex-direction: column;
+  }
+}

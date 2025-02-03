@@ -1,0 +1,87 @@
+@import '../styles/common.scss';
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userList {
+  padding: 24px;  
+
+  .viewToggle {
+    display: flex;
+    flex-direction: column;
+    height: 32px;
+    padding: 4px;
+    align-items: flex-end;
+    color: var(--semantic-fg-primary);
+
+    .toggleContainer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .resultsLabel {
+        color: var(--semantic-fg-secondary);
+
+        @extend .body-small;
+      }
+    }
+  }
+}
+
+.loading {
+  @extend .flexCenter;
+  flex-direction: column;
+  color: var(--semantic-fg-primary);
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 16px;
+    animation: rotate 2s linear infinite;
+
+    .path {
+      stroke: var(--semantic-fg-primary);
+      stroke-linecap: round;
+      animation: dash 1.5s ease-in-out infinite;
+    }
+  }
+}
+
+.error {
+  @extend .flexCenter;
+  color: var(--semantic-fg-primary);
+  background: var(--semantic-bg-secondary);
+  border-radius: 16px;
+  margin: 16px;
+
+  .errorIcon {
+    width: 24px;
+    height: 24px;
+    fill: var(--semantic-fg-primary);
+  }
+}
+
+// Add keyframes for spinner animation
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}

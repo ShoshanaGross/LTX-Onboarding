@@ -1,0 +1,8 @@
+.userGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(296px, 342px));
+  justify-content: center;
+  gap: 24px;
+  margin-top: 24px;
+} 

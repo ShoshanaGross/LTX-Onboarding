@@ -13,6 +13,7 @@ interface Company {
 }
 
 interface PostComment {
+  id: number;
   body: string;
   userId: number;
 }

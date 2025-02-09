@@ -58,6 +58,10 @@ const UserList = ({ users, loading, error, searchTerm, setSearchTerm }: UserList
 
   const assignRef = (userId: string, element: HTMLDivElement | null) => {
     userRefs.current[userId] = element;
+  }
+
+  const handleAddUser = () => {
+    navigate('/user/create');
   };
 
   const renderGridView = () => (
@@ -87,10 +91,15 @@ const UserList = ({ users, loading, error, searchTerm, setSearchTerm }: UserList
 
   return (
     <div className={styles.userList}>
-      <div className={styles.viewToggle}>
-        <div className={styles.toggleContainer}>
-          <span className={styles.resultsLabel}>{users.length} results</span>
-          {toggleButton()}
+      <div className={styles.header}>
+        <button className={styles.addButton} onClick={handleAddUser}>
+          Add User
+        </button>
+        <div className={styles.viewToggle}>
+          <div className={styles.toggleContainer}>
+            <span className={styles.resultsLabel}>{users.length} results</span>
+            {toggleButton()}
+          </div>
         </div>
       </div>
       {viewMode === 'grid' ? renderGridView() : renderTableView()}

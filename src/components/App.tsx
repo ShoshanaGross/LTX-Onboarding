@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 import UserProfile from './UserProfile';
-import { fetchUsers } from '../services/userService';
 import { User } from '../types/User';
 import SearchContainer from './SearchContainer';
 import { Layout } from './Layout';
 import NotFound from './NotFound';
+import { EditUser } from './EditUser';
+import CreateUser from './CreateUser';
+import { useUserStore } from '../stores/userStore';
 
 type FailedRequest = {
   state: 'failed',
@@ -27,16 +29,24 @@ type IdleRequest = {
 
 type Request = FailedRequest | PendingRequest | SuccessfulRequest | IdleRequest;
 
-const UserProfileWrapper = ({ users, signedInUser }: { users: User[], signedInUser: User | null }) => {
+const UserProfileWrapper = ({ signedInUser }: { signedInUser: User | null }) => {
   const { id } = useParams();
-  const userExists = users.find(u => u.id === `${id}`);
+  const users = useUserStore(state => state.users);
+  const [userExists, setUserExists] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (users.length > 0 && id) {
+      const found = users.find(u => u.id === id);
+      setUserExists(!!found);
+    }
+  }, [users, id]);
 
   return (
     <Layout userImage={signedInUser?.image}>
       {!userExists ? (
-        <NotFound message="User not found" />
+        <NotFound message="User not found" showHomeButton={true}/>
       ) : (
-        <UserProfile users={users} />
+        <UserProfile />
       )}
     </Layout>
   );
@@ -45,37 +55,26 @@ const UserProfileWrapper = ({ users, signedInUser }: { users: User[], signedInUs
 const App = () => {
   const [request, setRequest] = useState<Request>({ state: 'not_started' });
   const [signedInUser, setSignedInUser] = useState<User | null>(null);
+  const users = useUserStore(state => state.users);
 
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const data = await fetchUsers();
-        const usersWithPosts = data.map(user => ({
-          ...user,
-          posts: Array.from({ length: 3 }, () => ({
-            id: Math.floor(Math.random() * 1000),
-            image: `https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`,
-            comments: Array(3)
-              .fill(null)
-              .map(() => ({
-                body: 'This is a comment',
-                userId: Math.floor(Math.random() * data.length) + 1,
-              })),
-          })),
-        }));
-        setRequest({ state: 'done', result: usersWithPosts });
-        setSignedInUser(usersWithPosts[Math.floor(Math.random() * usersWithPosts.length)]);
+        if (users.length === 0) {
+          setRequest({ state: 'pending' });
+          await useUserStore.getState().initializeUsers();
+        }
+        setRequest({ state: 'done', result: users });
+        setSignedInUser(users[Math.floor(Math.random() * users.length)]);
       } catch (err) {
         setRequest({ state: 'failed', error: err instanceof Error ? err.message : 'An error occurred' });
       }
     };
 
     if (request.state === 'not_started') {
-      setRequest({ state: 'pending' });
       loadUsers();
     }
-  }, [request]);
-
+  }, [request, users]);
 
   return (
     <Router>
@@ -88,7 +87,6 @@ const App = () => {
                 <NotFound message={request.error} showHomeButton={false} />
               ) : (
                 <SearchContainer 
-                  users={request.state === 'done' ? request.result : []} 
                   loading={request.state === 'pending'} 
                   error={null} 
                 />
@@ -100,8 +98,22 @@ const App = () => {
           path="/user/:id"
           element={
             request.state === 'done' ? (
-              <UserProfileWrapper users={request.result} signedInUser={signedInUser} />
+              <UserProfileWrapper signedInUser={signedInUser} />
             ) : null
+          }
+        />
+        <Route 
+          path="/editUser/:id" 
+          element={
+            <EditUser />
+          }
+        />
+        <Route
+          path="/user/create"
+          element={
+            <Layout userImage={signedInUser?.image}>
+              <CreateUser />
+            </Layout>
           }
         />
       </Routes>

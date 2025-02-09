@@ -2,16 +2,16 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import UserList from './UserList';
-import { User } from '../types/User';
+import { useUserStore } from '../stores/userStore';
 
 interface SearchContainerProps {
-  users: User[];
   loading: boolean;
   error: string | null;
 }
 
-const SearchContainer: React.FC<SearchContainerProps> = ({ users, loading, error }) => {
+const SearchContainer: React.FC<SearchContainerProps> = ({ loading, error }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const users = useUserStore(state => state.users);
   const [filteredUsers, setFilteredUsers] = useState(users);
 
   // Get searchTerm from URL or empty string

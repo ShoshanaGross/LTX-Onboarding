@@ -4,15 +4,13 @@ import { User } from '../types/User';
 import styles from './UserProfile.module.scss';
 import BackIcon from '../assets/back.svg';
 import UserPost from './UserPost';
-
-type UserProfileProps = {
-  users: User[];
-};
+import { useUserStore } from '../stores/userStore';
 
 type Tab = 'Overview' | 'Post';
 
-const UserProfile = ({ users }: UserProfileProps) => {
+const UserProfile = () => {
   const { id } = useParams<{ id: string }>();
+  const users = useUserStore(state => state.users);
   const user = useMemo(() => users.find(u => u.id === id), [users, id]);
   const tabs: Tab[] = ['Overview', 'Post'];
   const [activeTab, setActiveTab] = useState<Tab>('Overview');
@@ -34,6 +32,14 @@ const UserProfile = ({ users }: UserProfileProps) => {
         previousViewMode: location.state?.previousViewMode,
         searchTerm: location.state?.searchTerm,
       },
+    });
+  };
+
+  const handleEditClick = () => {
+    navigate(`/editUser/${id}`, {
+      state: {
+        previousPath: location.pathname,
+      }
     });
   };
 
@@ -63,6 +69,7 @@ const UserProfile = ({ users }: UserProfileProps) => {
   const aboutMeText = (user: User) => {
     const companyText = user.company ? ` and currntly work as a ${user.company?.title} at the 
       ${user.company?.department} department at ${user.company?.name}.` : '.';
+
     return `Hi, I'm ${user.firstName} ${user.lastName}. I'm ${user.age} years old${companyText} I graduated from
     ${user.university}. I live in ${user.address.city}, ${user.address.state}, and you can reach me at
     ${user.email} or ${user.phone}.`;
@@ -121,7 +128,11 @@ const UserProfile = ({ users }: UserProfileProps) => {
             </div>
             <div className={styles.userEmail}>{user.email}</div>
             <div className={styles.editButtonContainer}>
-              <button className={styles.editButton}>Edit</button>
+            <button 
+                className={styles.editButton}
+                onClick={handleEditClick} >
+                Edit
+              </button>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { User } from '../types/User'
-import { fetchUsers } from '../services/userService'
+import { fetchUsers, deleteUserFromDB, updateUserInDB } from '../services/userService'
 
 interface UserState {
   users: User[]
@@ -22,24 +22,10 @@ export const useUserStore = create(
       },
       updateUser: async (updatedUser: User) => {
         try {
-          // First update the database
-          const response = await fetch(`http://localhost:3300/users/${updatedUser.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedUser)
-          });
-
-          if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(`Failed to update user: ${errorData}`);
-          }
-
-          // If database update successful, update local state
+          const updatedUserInDB = await updateUserInDB(updatedUser);
           set((state) => ({
             users: state.users.map((user) => 
-              user.id === updatedUser.id ? updatedUser : user
+              user.id === updatedUserInDB.id ? updatedUserInDB : user
             )
           }));
         } catch (error) {
@@ -47,19 +33,9 @@ export const useUserStore = create(
           throw error;
         }
       },
-      deleteUser: async (userId) => {
+      deleteUser: async (userId: string) => {
         try {
-          // First delete from the database
-          const response = await fetch(`http://localhost:3300/users/${userId}`, {
-            method: 'DELETE',
-          });
-
-          if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(`Failed to delete user: ${errorData}`);
-          }
-
-          // If database deletion successful, update local state
+          await deleteUserFromDB(userId);
           set((state) => ({
             users: state.users.filter((user) => user.id !== userId)
           }));

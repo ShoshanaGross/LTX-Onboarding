@@ -70,8 +70,10 @@ const UserProfile = () => {
     const companyText = user.company ? ` and currntly work as a ${user.company?.title} at the 
       ${user.company?.department} department at ${user.company?.name}.` : '.';
 
-    return `Hi, I'm ${user.firstName} ${user.lastName}. I'm ${user.age} years old${companyText} I graduated from
-    ${user.university}. I live in ${user.address.city}, ${user.address.state}, and you can reach me at
+    const universityText = user.university ? ` I graduated from ${user.university}.` : '';
+
+    return `Hi, I'm ${user.firstName} ${user.lastName}. I'm ${user.age} years old${companyText}
+    ${universityText} I live in ${user.address.city}, ${user.address.state}, and you can reach me at
     ${user.email} or ${user.phone}.`;
   }
 

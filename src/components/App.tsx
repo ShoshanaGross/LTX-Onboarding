@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import { User } from '../types/User';
@@ -20,7 +20,6 @@ type PendingRequest = {
 
 type SuccessfulRequest = {
   state: 'done',
-  result: User[]
 }
 
 type IdleRequest = {
@@ -34,7 +33,7 @@ const UserProfileWrapper = ({ signedInUser }: { signedInUser: User | null }) => 
   const users = useUserStore(state => state.users);
   const [userExists, setUserExists] = useState<boolean>(false);
 
-  useEffect(() => {
+  useMemo(() => {
     if (users.length > 0 && id) {
       const found = users.find(u => u.id === id);
       setUserExists(!!found);
@@ -64,8 +63,7 @@ const App = () => {
           setRequest({ state: 'pending' });
           await useUserStore.getState().initializeUsers();
         }
-        setRequest({ state: 'done', result: users });
-        setSignedInUser(users[Math.floor(Math.random() * users.length)]);
+        setRequest({ state: 'done'});
       } catch (err) {
         setRequest({ state: 'failed', error: err instanceof Error ? err.message : 'An error occurred' });
       }
@@ -75,6 +73,12 @@ const App = () => {
       loadUsers();
     }
   }, [request, users]);
+
+  useEffect(() => {
+    if (users.length > 0) {
+      setSignedInUser(users[Math.floor(Math.random() * users.length)]);
+    }
+  }, [users]);
 
   return (
     <Router>

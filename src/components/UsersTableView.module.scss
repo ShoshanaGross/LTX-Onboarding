@@ -1,0 +1,66 @@
+@import '../styles/common.scss';
+.userTableContainer {
+  width: 100%;
+  overflow-x: auto;
+  color: var(--semantic-fg-primary);
+  display: flex;
+  flex-direction: column;
+
+  .userTable {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    min-width: 600px;
+
+    th, td {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    th {
+      height: 56px;
+      text-align: left;
+      padding: 16px 4px;
+      @extend .label-lg;
+    }
+
+    td {
+      text-align: left;
+      padding-left: 4px;
+      @extend .body-large;
+      background: var(--semantic-bg-secondary);
+    }
+
+    tr {
+      height: 52px;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--semantic-fg-neutral-secondary, #e6e7e9);
+      cursor: pointer;
+      
+      &:hover {
+        td {
+          background: var(--semantic-bg-tertiary);
+        }
+      }
+    }
+
+    .userTableName {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      color: var(--text-primary, rgba(0, 0, 0, 0.87));
+      font-feature-settings: 'liga' off, 'clig' off;
+      @extend .typography-body2;
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 16px;
+        fill: var(--semantic-bg-neutral-secondary, rgba(44, 45, 48, 0.08));
+        object-fit: cover;
+      }
+    }
+  }
+}

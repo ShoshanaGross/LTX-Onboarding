@@ -1,30 +1,20 @@
 import React, { useState } from 'react';
-import { Post, PostComment, User } from '../types/User';
+import { Post } from '../types/User';
 import styles from './UserPost.module.scss';
 import ArrowForward from '../assets/ArrowForward.svg';
+import Comment from './Comment';
 
 interface UserPostProps {
   post: Post;
-  getUserById: (userId: number) => User;
 }
 
-const UserPost: React.FC<UserPostProps> = ({ post, getUserById }) => {
+const UserPost: React.FC<UserPostProps> = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
 
   const toggleComments = () => {
     setShowComments(prev => !prev);
   };
 
-  const renderComment = (comment: PostComment) => (
-    <div key='${comment.id}' className={styles.userPostCommentContainer}>
-      <img
-        src={getUserById(comment.userId).image}
-        alt="user-image"
-        className={styles.userPostCommentUserImage}
-      />
-      <div className={styles.userPostCommentBody}>{comment.body}</div>
-    </div>
-  );
 
   return (
     <div className={styles.userPostItem}>
@@ -41,7 +31,9 @@ const UserPost: React.FC<UserPostProps> = ({ post, getUserById }) => {
       </button>
       {showComments && (
         <div className={styles.userPostComments}>
-          {post.comments.slice(0, 3).map(renderComment)}
+          {post.comments.slice(0, 3).map(comment => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
         </div>
       )}
     </div>

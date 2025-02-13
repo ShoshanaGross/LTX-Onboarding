@@ -2,22 +2,19 @@ import React, { useState } from 'react';
 import styles from './ImageInput.module.scss';
 
 interface ImageInputProps {
-  initialImage?: string;
+  imagePreview?: string;
   onImageChange: (imageUrl: string) => void;
   onError: (error: string) => void;
 }
 
 export const ImageInput: React.FC<ImageInputProps> = ({
-  initialImage = '',
+  imagePreview = '',
   onImageChange,
   onError
 }) => {
-  const [imagePreview, setImagePreview] = useState<string | null>(initialImage || null);
-
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     onImageChange(value);
-    setImagePreview(value);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +31,6 @@ export const ImageInput: React.FC<ImageInputProps> = ({
       reader.onloadend = () => {
         const base64String = reader.result as string;
         onImageChange(base64String);
-        setImagePreview(base64String);
       };
       reader.readAsDataURL(file);
     } catch {
@@ -56,7 +52,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
           <label>or paste image URL:</label>
           <input
             type="url"
-            value={initialImage}
+            value={imagePreview}
             onChange={handleUrlChange}
             placeholder="https://example.com/image.jpg"
           />

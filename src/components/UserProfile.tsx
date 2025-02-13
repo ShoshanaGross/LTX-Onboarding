@@ -77,19 +77,12 @@ const UserProfile = () => {
     ${user.email} or ${user.phone}.`;
   }
 
-
-  const getUserById = (userId: number) => {
-    const foundUser = users.find(user => user.id === `${userId}`);
-    return foundUser || users[0]; // Fallback to first user if not found
-  };
-
   const posts = () => (
     <div className={styles.userProfileTabsPostItems}>
       {user.posts.map((post) => (
         <UserPost
           key={post.id}
           post={post}
-          getUserById={getUserById}
         />
       ))}
     </div>

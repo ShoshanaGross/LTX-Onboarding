@@ -65,7 +65,7 @@ export const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onCancel, is
         email: user.email,
         phone: user.phone,
         image: user.image,
-        imageFile: null,
+        imageFile: new File([user.image], user.image, { type: 'image/jpeg' }),
         address_address: user.address.address,
         address_city: user.address.city,
         address_state: user.address.state,
@@ -82,11 +82,12 @@ export const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onCancel, is
     }));
   };
 
-  const handleImageChange = (imageUrl: string) => {
+  const handleImageChange = (imageUrl: string, file: File | null) => {
     console.log('imageUrl', imageUrl);
     setFormData(prev => ({
       ...prev,
-      image: imageUrl
+      image: imageUrl,
+      imageFile: file
     }));
   };
 
@@ -151,7 +152,7 @@ export const UserForm: React.FC<UserFormProps> = ({ user, onSubmit, onCancel, is
         {renderField('Phone', 'phone', formData.phone, 'tel')}
         
         <ImageInput
-          initialImage={formData.image}
+          imagePreview={formData.image}
           onImageChange={handleImageChange}
           onError={setError}
         />

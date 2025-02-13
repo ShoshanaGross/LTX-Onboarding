@@ -13,6 +13,7 @@ const NotFound: React.FC<NotFoundProps> = ({ message , showHomeButton }) => {
   return (
     <div className={styles.notFound}>
       <h1>{message}</h1>
+      <button onClick={() => window.location.reload()}>Retry</button>
       {showHomeButton && <button onClick={() => navigate('/')}>Go Home</button>}
     </div>
   );
